@@ -1,0 +1,36 @@
+# dependencies
+node_modules/
+
+# env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# logs
+logs
+*.log
+npm-debug.log*
+
+# build folders
+build/
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# coverage
+coverage/
+
+# frontend build
+frontend/build/
+
+# backend uploads/temp
+backend/uploads/
+backend/temp/
