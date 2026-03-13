@@ -7,7 +7,9 @@ import showRoutes from "./modules/show/show.routes.js";
 import seatRoutes from "./modules/seat/seat.routes.js";
 import bookingRoutes from "./modules/booking/booking.routes.js";
 import authRoutes from "./modules/auth/auth.routes.js";
-
+import permissionRoutes from "./modules/permission/permission.routes.js";
+import roleRoutes from "./modules/role/role.routes.js";
+import employeeRoutes from "./modules/employee/employee.routes.js";
 
 
 
@@ -27,6 +29,10 @@ app.use("/api/theatres", theatreRoutes);
 app.use("/api/shows", showRoutes);
 app.use("/api/seats", seatRoutes);
 app.use("/api/bookings", bookingRoutes);
+
+app.use("/api/permissions", permissionRoutes);
+app.use("/api/roles", roleRoutes);
+app.use("/api/employees", employeeRoutes);
 
 
 

@@ -1,22 +1,23 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import * as authService from "./auth.service.js";
+import * as userService from "./auth.service.js";
 
 export const register = async (req, res) => {
-
   try {
 
     const { name, email, password } = req.body;
 
-    const existingUser = await authService.findUserByEmail(email);
+    const existingUser = await userService.findUserByEmail(email);
 
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
+      return res.status(400).json({
+        message: "User already exists"
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await authService.createUser({
+    const user = await userService.createUser({
       name,
       email,
       password: hashedPassword
@@ -27,29 +28,31 @@ export const register = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-
 };
 
 export const login = async (req, res) => {
-
   try {
 
     const { email, password } = req.body;
 
-    const user = await authService.findUserByEmail(email);
+    const user = await userService.findUserByEmail(email);
 
     if (!user) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({
+        message: "Invalid email or password"
+      });
     }
 
     const match = await bcrypt.compare(password, user.password);
 
     if (!match) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({
+        message: "Invalid email or password"
+      });
     }
 
     const token = jwt.sign(
-      { id: user._id, role: user.role },
+      { id: user._id, isEmployee: user.isEmployee },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
@@ -62,26 +65,28 @@ export const login = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-
 };
 
-export const changeUserRole = async (req, res) => {
-
+export const getUsers = async (req, res) => {
   try {
 
-    const { role } = req.body;
+    const users = await userService.getUsers();
 
-    const user = await authService.updateUserRole(
-      req.params.id,
-      role
-    );
+    res.json(users);
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const makeEmployee = async (req, res) => {
+  try {
+
+    const user = await userService.makeEmployee(req.params.id);
 
     res.json(user);
 
   } catch (error) {
-
     res.status(500).json({ message: error.message });
-
   }
-
 };

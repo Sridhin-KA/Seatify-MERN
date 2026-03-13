@@ -1,11 +1,23 @@
 import express from "express";
-import { register, login } from "./auth.controller.js";
-import { authenticate } from "../../middlewares/auth.middleware.js";
-import { isAdmin } from "../../middlewares/admin.middleware.js";
-import { changeUserRole } from "./auth.controller.js";
+import {
+  register,
+  login,
+  getUsers,
+  makeEmployee
+} from "./auth.controller.js";
+
 const router = express.Router();
 
+/* Register */
 router.post("/register", register);
+
+/* Login */
 router.post("/login", login);
-router.patch("/role/:id", authenticate, isAdmin, changeUserRole);
+
+/* Get all users */
+router.get("/", getUsers);
+
+/* Promote user to employee */
+router.patch("/employee/:id", makeEmployee);
+
 export default router;
