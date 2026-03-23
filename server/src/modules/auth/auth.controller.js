@@ -32,8 +32,13 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
+    const { email, password } = req.body || {};
 
-    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({
+        message: "Email and password required"
+      });
+    }
 
     const user = await userService.findUserByEmail(email);
 
@@ -57,8 +62,13 @@ export const login = async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    res.json({
-      token,
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000
+    }).json({
+      message: "Login successful",
       user
     });
 
@@ -66,7 +76,6 @@ export const login = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 export const getUsers = async (req, res) => {
   try {
 

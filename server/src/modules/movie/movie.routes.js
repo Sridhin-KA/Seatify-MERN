@@ -6,7 +6,7 @@ import { isAdmin } from "../../middlewares/admin.middleware.js";
 
 const router = express.Router();
 
-router.post("/addmovie",authenticate, isAdmin, movieController.addMovie);
-router.get("/getmovies", movieController.getMovies);
+router.post("/addmovie",authenticate,  movieController.addMovie);
+router.get("/getmovies",authenticate, movieController.getMovies);
 
 export default router;

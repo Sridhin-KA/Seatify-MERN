@@ -1,0 +1,25 @@
+{
+  "name": "seatify",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+  "start": "concurrently \"npm run server\" \"npm run client\"",
+  "server": "npm start --prefix server",
+  "client": "npm run dev --prefix client/Seatify"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sridhin-KA/Seatify.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sridhin-KA/Seatify/issues"
+  },
+  "homepage": "https://github.com/Sridhin-KA/Seatify#readme",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

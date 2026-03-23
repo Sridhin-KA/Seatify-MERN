@@ -10,14 +10,15 @@ import authRoutes from "./modules/auth/auth.routes.js";
 import permissionRoutes from "./modules/permission/permission.routes.js";
 import roleRoutes from "./modules/role/role.routes.js";
 import employeeRoutes from "./modules/employee/employee.routes.js";
-
+import cookieParser from "cookie-parser";
 
 
 const app = express();
 
 app.use(cors());
-app.use(express.json());
 
+app.use(express.json());
+app.use(cookieParser());
 
 
 
