@@ -1,40 +1,19 @@
-  import { BrowserRouter, Routes, Route } from "react-router-dom";
-  import Home from "./pages/Home";
-  import Login from "./pages/Login";
-  import Register from "./pages/Register";
-  import Movies from "./pages/Movies";
-  import MovieDetails from "./pages/MovieDetails";
-  import PrivateRoute from "./components/PrivateRoute";
+import { Outlet } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
-  function App() {
-    return (
-      <BrowserRouter>
+function App() {
+  return (
+    <>
+      <Header />
 
-        <Routes>
+      <main className="min-h-screen p-4">
+        <Outlet /> {/* ✅ Pages will render here */}
+      </main>
 
-          <Route path="/" element={<Home />} />
+      <Footer />
+    </>
+  );
+}
 
-          <Route path="/login" element={<Login />} />
-
-          <Route path="/register" element={<Register />} />
-        
-          <Route
-          path="/movies"
-          element={
-            <PrivateRoute>
-              <Movies />
-            </PrivateRoute>
-          }
-        />
-
- 
-
-          <Route path="/movie/:id" element={<MovieDetails />} />
-
-        </Routes>
-
-      </BrowserRouter>
-    );
-  }
-
-  export default App;
+export default App;

@@ -3,7 +3,8 @@ import {
   register,
   login,
   getUsers,
-  makeEmployee
+  makeEmployee,
+  logout
 } from "./auth.controller.js";
 
 const router = express.Router();
@@ -13,6 +14,10 @@ router.post("/register", register);
 
 /* Login */
 router.post("/login", login);
+
+// Logout
+router.post("/logout", logout);
+
 
 /* Get all users */
 router.get("/", getUsers);
