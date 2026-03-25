@@ -10,7 +10,8 @@ import { store } from "./app/store";
 import App from "./App.jsx";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
-import Movies from "./pages/Movies.jsx";
+import Movies from "./pages/Movies.jsx"
+import Register from "./pages/Register.jsx";
 
 // ✅ Router setup
 const router = createBrowserRouter([
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "movies",
         element: <Movies />
+      },
+       {
+        path: "register",
+        element: <Register />
       }
     ]
   }

@@ -1,92 +1,102 @@
-import { useState } from "react";
-import API from "../api/axios";
-import { useNavigate, Link } from "react-router-dom";
+// src/pages/Register.jsx
 
-function Register() {
+import { useState } from "react";
+import FormContainer from "../components/FormContainer";
+import { useRegisterMutation } from "../features/auth/authApiSlice";
+import { useDispatch } from "react-redux";
+import { setUser } from "../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+
+const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [register, { isLoading }] = useRegisterMutation();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleRegister = async (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     try {
-      await API.post("/auth/register", {
-        name,
-        email,
-        password
-      });
+      const res = await register({ name, email, password }).unwrap();
 
-      navigate("/login");
+      dispatch(setUser(res.user));
+      navigate("/movies"); // auto login after register
     } catch (err) {
-      console.log(err);
+      console.log("ERROR:", err);
+      alert(err?.data?.message || "Register failed");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">
-          Create Account
-        </h2>
+    <FormContainer>
+      <h1 className="text-2xl font-bold text-center mb-6">Register</h1>
 
-        <form onSubmit={handleRegister} className="space-y-4">
-
-          {/* Name */}
+      <form onSubmit={submitHandler} className="space-y-4">
+        
+        {/* Name */}
+        <div>
+          <label className="block mb-1 text-sm font-medium">Name</label>
           <input
             type="text"
-            placeholder="Name"
+            placeholder="Enter name"
+            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
             required
           />
+        </div>
 
-          {/* Email */}
+        {/* Email */}
+        <div>
+          <label className="block mb-1 text-sm font-medium">Email</label>
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Enter email"
+            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
             required
           />
+        </div>
 
-          {/* Password */}
+        {/* Password */}
+        <div>
+          <label className="block mb-1 text-sm font-medium">Password</label>
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Enter password"
+            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
             required
           />
+        </div>
 
-          {/* Button */}
-          <button
-            type="submit"
-            className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"
-          >
-            Register
-          </button>
+        {/* Button */}
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+        >
+          {isLoading ? "Registering..." : "Register"}
+        </button>
+      </form>
 
-        </form>
-
-        {/* 🔗 Login Link */}
-        <p className="text-center text-sm mt-4">
-          Already have an account?{" "}
-          <Link to="/login" className="text-blue-500 hover:underline">
-            Login
-          </Link>
-        </p>
-
-      </div>
-
-    </div>
+      {/* Footer */}
+      <p className="text-sm text-center mt-4">
+        Already have an account?{" "}
+        <span
+          onClick={() => navigate("/login")}
+          className="text-blue-600 cursor-pointer hover:underline"
+        >
+          Login
+        </span>
+      </p>
+    </FormContainer>
   );
-}
+};
 
 export default Register;

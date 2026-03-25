@@ -4,8 +4,11 @@ import {
   login,
   getUsers,
   makeEmployee,
-  logout
+  logout,
+  getMe,
+  
 } from "./auth.controller.js";
+import { authenticate } from "../../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
@@ -22,6 +25,7 @@ router.post("/logout", logout);
 /* Get all users */
 router.get("/", getUsers);
 
+router.get("/me", authenticate, getMe);
 /* Promote user to employee */
 router.patch("/employee/:id", makeEmployee);
 

@@ -118,3 +118,9 @@ export const logout = (req, res) => {
     });
   }
 };
+
+export const getMe = (req, res) => {
+  res.status(200).json({
+    user: req.user,
+  });
+};
