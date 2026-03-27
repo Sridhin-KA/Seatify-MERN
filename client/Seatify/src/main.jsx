@@ -12,6 +12,7 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Movies from "./pages/Movies.jsx"
 import Register from "./pages/Register.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
 
 // ✅ Router setup
 const router = createBrowserRouter([
@@ -21,7 +22,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Movies />
+        element:  (
+          <PrivateRoute requireEmployee={true}>
+            <Movies />
+          </PrivateRoute>
+        )
       },
       {
         path: "login",
@@ -29,7 +34,13 @@ const router = createBrowserRouter([
       },
       {
         path: "movies",
-        element: <Movies />
+        element: 
+       (
+          <PrivateRoute requireEmployee={true}>
+            <Movies />
+          </PrivateRoute>
+        )
+      
       },
        {
         path: "register",

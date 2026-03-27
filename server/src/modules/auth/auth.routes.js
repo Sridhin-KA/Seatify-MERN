@@ -9,6 +9,7 @@ import {
   
 } from "./auth.controller.js";
 import { authenticate } from "../../middlewares/auth.middleware.js";
+import { isEmployee } from "../../middlewares/isEmployee.middleware.js";
 
 const router = express.Router();
 
@@ -23,7 +24,7 @@ router.post("/logout", logout);
 
 
 /* Get all users */
-router.get("/", getUsers);
+router.get("/", authenticate,isEmployee, getUsers);
 
 router.get("/me", authenticate, getMe);
 /* Promote user to employee */

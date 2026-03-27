@@ -21,6 +21,13 @@ function App() {
       dispatch(logout());
     }
   }, [isSuccess, isError, data, dispatch]);
+    if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-lg font-semibold">Checking authentication...</div>
+      </div>
+    );
+  }
 
   return (
     <>

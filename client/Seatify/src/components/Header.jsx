@@ -23,6 +23,7 @@ const Header = () => {
             <>
               <span className="text-sm text-gray-600">
                 Hi, {user.name}
+               
               </span>
               <Link
                 to="/profile"
